@@ -1,0 +1,43 @@
+{
+  "name": "trello-clone",
+  "version": "1.0.0",
+  "description": "Backend for trello-clone app created by Houston",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "server": "nodemon app.js",
+    "client": "npm run start --prefix trello-clone",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/houston2101/trello-clone.git"
+  },
+  "keywords": [
+    "Trello-Clone",
+    "JS",
+    "React",
+    "MERN",
+    "NodeJS",
+    "Express",
+    "Mongo"
+  ],
+  "author": "Houston aka Euheniya Pereverzeva",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/houston2101/trello-clone/issues"
+  },
+  "homepage": "https://github.com/houston2101/trello-clone#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "config": "^3.3.6",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.3"
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.1",
+    "nodemon": "^2.0.12"
+  }
+}

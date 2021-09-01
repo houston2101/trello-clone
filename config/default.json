@@ -1,0 +1,5 @@
+{
+    "port": 5000,
+    "mongoUri": "mongodb+srv://houston2101:nolufe8321@trellodb.gsszv.mongodb.net/trelloDB?retryWrites=true&w=majority",
+    "baseUrl": "http://localhost:5000"
+}
