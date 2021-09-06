@@ -5,7 +5,7 @@ import Header from "../sections/header/header";
 
 const Layout = ({ children }) => {
   return (
-    <Box>
+    <Box minH="100vh" backgroundColor="grey.200">
       <Header />
       <Center>{children}</Center>
     </Box>

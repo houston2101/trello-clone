@@ -6,6 +6,8 @@ import AuthPage from "./pages/login";
 import RegPage from "./pages/signup";
 import Fonts from "./theme/fonts";
 import { customTheme } from "./theme";
+import Account from "./pages/account";
+import MainPage from "./pages/main";
 
 function App() {
   return (
@@ -18,6 +20,12 @@ function App() {
           </Route>
           <Route path="/register">
             <RegPage />
+          </Route>
+          <Route path="/account">
+            <Account />
+          </Route>
+          <Route path="/main">
+            <MainPage />
           </Route>
         </Switch>
       </Router>
