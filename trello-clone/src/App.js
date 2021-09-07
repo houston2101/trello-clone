@@ -8,6 +8,8 @@ import Fonts from "./theme/fonts";
 import { customTheme } from "./theme";
 import Account from "./pages/account";
 import MainPage from "./pages/main";
+import BoardModal from "./components/boardModal";
+import CardModal from "./components/cardModal";
 
 function App() {
   return (

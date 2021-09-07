@@ -72,7 +72,7 @@ const Account = () => {
               mb="17px"
               fontWeight="400"
               _hover={{
-                bgColor: "#93A7AD",
+                bgColor: "#7697A0",
               }}
               _focus={{
                 boxShadow: "none",
@@ -87,6 +87,12 @@ const Account = () => {
             borderRadius="15px"
             mt="auto"
             fontWeight="400"
+            _hover={{
+              bgColor: "#BE6161",
+            }}
+            _focus={{
+              boxShadow: "none",
+            }}
           >
             Delete my account
           </Button>

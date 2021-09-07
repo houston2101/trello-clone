@@ -83,7 +83,7 @@ const RegPage = () => {
             w={{ base: "100px", md: "140px" }}
             fontWeight="400"
             _hover={{
-              bgColor: "#93A7AD",
+              bgColor: "##7697A0",
             }}
             _focus={{
               boxShadow: "none",
@@ -100,7 +100,7 @@ const RegPage = () => {
             w={{ base: "100px", md: "140px" }}
             fontWeight="400"
             _hover={{
-              bgColor: "#93A7AD",
+              bgColor: "#7697A0",
             }}
             _focus={{
               boxShadow: "none",
