@@ -9,20 +9,24 @@ import CardModal from "../components/cardModal";
 import "swiper/swiper-bundle.min.css";
 
 const BoardSwiper = styled(Swiper)`
-  & > div .swiper-slide {
-    height: 85vh;
-    display: flex;
-    justify-content: center;
-    max-width: 400px;
-    &:not(:last-child) {
-      margin-right: 50px;
+  @media (min-width: 1540px) {
+    width: 1440px;
+  }
+  & > div {
+    .swiper-slide {
+      height: 85vh;
+      display: flex;
+      justify-content: center;
     }
   }
 `;
 
 const BoardPage = () => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [isLargerThen1100] = useMediaQuery("(min-width: 1100px)");
+  const [isLargerThen900, isLargerThen1100] = useMediaQuery([
+    "(min-width: 900px)",
+    "(min-width: 1100px)",
+  ]);
   const setIsOpenHandler = () => {
     setIsOpen(!isOpen);
   };
@@ -32,15 +36,26 @@ const BoardPage = () => {
       <Flex justifyContent="space-evenly" w="100%" pt="30px" pb="30px">
         <BoardSwiper
           className={isLargerThen1100 ? "swiper-no-swiping" : "swiper"}
-          centeredSlides={!isLargerThen1100}
-          slidesPerView="1"
+          resizeObserver
+          observer
+          centeredSlides={isLargerThen900 ? false : true}
+          slidesPerView={1}
           spaceBetween={0}
           breakpoints={{
-            768: {
+            900: {
               slidesPerView: 2,
             },
-            1280: {
+            1100: {
               slidesPerView: 3,
+              spaceBetween: 10,
+            },
+            1200: {
+              slidesPerView: 3,
+              spaceBetween: 50,
+            },
+            1440: {
+              slidesPerView: 3,
+              spaceBetween: 0,
             },
           }}
         >
