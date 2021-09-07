@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Box, Stack, Text } from "@chakra-ui/react";
+import { Link as BrowserLink } from "react-router-dom";
 
 const Board = () => {
   return (
@@ -7,6 +8,8 @@ const Board = () => {
       bgColor="blue.300"
       w={{ base: "100%", md: "40%" }}
       minH="130px"
+      as={BrowserLink}
+      to="/boards/some-board"
       borderRadius="25px"
       padding="19px 15px"
       mb="20px"
