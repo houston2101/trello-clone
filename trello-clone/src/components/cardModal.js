@@ -19,7 +19,11 @@ const CardModal = ({ isOpen, onClose }) => {
       <ModalContent>
         <ModalHeader>
           Add new card
-          <ModalCloseButton />
+          <ModalCloseButton
+            _focus={{
+              boxShadow: "none",
+            }}
+          />
         </ModalHeader>
 
         <ModalBody display="flex" alignItems="center">
@@ -36,7 +40,13 @@ const CardModal = ({ isOpen, onClose }) => {
           <Textarea></Textarea>
         </ModalBody>
         <ModalFooter>
-          <Button>Create card</Button>
+          <Button
+            _focus={{
+              boxShadow: "none",
+            }}
+          >
+            Create card
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

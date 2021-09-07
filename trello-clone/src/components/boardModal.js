@@ -18,7 +18,11 @@ const BoardModal = ({ isOpen, onClose }) => {
       <ModalContent>
         <ModalHeader>
           Add new board
-          <ModalCloseButton />
+          <ModalCloseButton
+            _focus={{
+              boxShadow: "none",
+            }}
+          />
         </ModalHeader>
 
         <ModalBody display="flex" alignItems="center">
@@ -34,7 +38,13 @@ const BoardModal = ({ isOpen, onClose }) => {
           ></Input>
         </ModalBody>
         <ModalFooter>
-          <Button>Create board</Button>
+          <Button
+            _focus={{
+              boxShadow: "none",
+            }}
+          >
+            Create board
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
