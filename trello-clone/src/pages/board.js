@@ -1,9 +1,10 @@
 import * as React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Stack, Box, Circle, Flex, Text, Button } from "@chakra-ui/react";
+import { Stack, Box, Circle, Flex, Text, Button, useMediaQuery } from "@chakra-ui/react";
 import Card from "../components/card";
 import Layout from "../components/layout/layout";
 import styled from "@emotion/styled";
+import CardModal from "../components/cardModal";
 
 import "swiper/swiper-bundle.min.css";
 
@@ -12,17 +13,28 @@ const BoardSwiper = styled(Swiper)`
     height: 85vh;
     display: flex;
     justify-content: center;
+    max-width: 400px;
+    &:not(:last-child) {
+      margin-right: 50px;
+    }
   }
 `;
 
 const BoardPage = () => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [isLargerThen1100] = useMediaQuery("(min-width: 1100px)");
+  const setIsOpenHandler = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <Layout>
       <Flex justifyContent="space-evenly" w="100%" pt="30px" pb="30px">
         <BoardSwiper
-          centeredSlides
+          className={isLargerThen1100 ? "swiper-no-swiping" : "swiper"}
+          centeredSlides={!isLargerThen1100}
           slidesPerView="1"
-          spaceBetween={50}
+          spaceBetween={0}
           breakpoints={{
             768: {
               slidesPerView: 2,
@@ -60,6 +72,7 @@ const BoardPage = () => {
                 _focus={{
                   boxShadow: "none",
                 }}
+                onClick={setIsOpenHandler}
               >
                 <Flex alignItems="center">
                   Add card
@@ -125,6 +138,7 @@ const BoardPage = () => {
           </SwiperSlide>
         </BoardSwiper>
       </Flex>
+      <CardModal isOpen={isOpen} onClose={setIsOpenHandler} />
     </Layout>
   );
 };
