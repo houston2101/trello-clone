@@ -8,6 +8,7 @@ import Fonts from "./theme/fonts";
 import { customTheme } from "./theme";
 import Account from "./pages/account";
 import MainPage from "./pages/main";
+import BoardPage from "./pages/board";
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
           </Route>
           <Route path="/main">
             <MainPage />
+          </Route>
+          <Route path="/boards/:id">
+            <BoardPage />
           </Route>
         </Switch>
       </Router>
