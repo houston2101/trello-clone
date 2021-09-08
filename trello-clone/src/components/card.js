@@ -1,9 +1,21 @@
 import * as React from "react";
 import { Box, Text, Flex } from "@chakra-ui/react";
 
+import CardOpenModal from "./sections/cardOpenModal";
+
 const Card = () => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const setIsOpenHandler = () => {
+    setIsOpen(!isOpen);
+  };
   return (
-    <Box _notLast={{ mb: "20px" }} bgColor="grey.100" borderRadius="25px" padding="15px">
+    <Box
+      _notLast={{ mb: "20px" }}
+      bgColor="grey.100"
+      borderRadius="25px"
+      padding="15px"
+      onClick={setIsOpenHandler}
+    >
       <Flex justifyContent="space-between" borderBottom="2px solid #142F32" mb="10px">
         <Text fontWeight="600">Card title</Text>
         <Flex alignItems="center">
@@ -37,6 +49,7 @@ const Card = () => {
         </Flex>
       </Flex>
       <Text>Card description and task description</Text>
+      <CardOpenModal isOpen={isOpen} onClose={setIsOpenHandler} />
     </Box>
   );
 };

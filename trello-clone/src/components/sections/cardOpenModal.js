@@ -8,17 +8,16 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
-  Textarea,
-  Input,
+  Text,
 } from "@chakra-ui/react";
 
-const CardModal = ({ isOpen, onClose }) => {
+const CardOpenModal = ({ isOpen, onClose }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent flexDir="column">
         <ModalHeader>
-          Add new card
+          Card title
           <ModalCloseButton
             _focus={{
               boxShadow: "none",
@@ -26,27 +25,25 @@ const CardModal = ({ isOpen, onClose }) => {
           />
         </ModalHeader>
 
-        <ModalBody display="flex" alignItems="center" flexDir="column">
-          <Input
-            placeholder="Card name"
-            fontSize={["xs", "xs", "xs", "s"]}
-            borderRadius="15px"
-            bgColor="#dcdcdc"
-            border="none"
-            mb="25px"
-            _focus={{
-              boxShadow: "none",
-            }}
-          ></Input>
-          <Textarea placeholder="Card description"></Textarea>
+        <ModalBody>
+          Description of your card Description of your card Description of your card Description of
+          your card Description of your card Description of your card Description of your card
         </ModalBody>
         <ModalFooter>
           <Button
+            fontSize={["xs", "xs", "xs", "s"]}
+            bgColor="red.100"
+            borderRadius="15px"
+            mt="auto"
+            fontWeight="400"
+            _hover={{
+              bgColor: "#BE6161",
+            }}
             _focus={{
               boxShadow: "none",
             }}
           >
-            Create card
+            Delete card
           </Button>
         </ModalFooter>
       </ModalContent>
@@ -54,4 +51,4 @@ const CardModal = ({ isOpen, onClose }) => {
   );
 };
 
-export default CardModal;
+export default CardOpenModal;
