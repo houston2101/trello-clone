@@ -11,6 +11,12 @@ const boardSchema = new Schema(
       required: true,
       unique: false,
     },
+    columns: {
+      type: Array,
+      required: true,
+      unique: false,
+      default: [[], [], []],
+    },
     type: {
       type: String,
       required: true,
