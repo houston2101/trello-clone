@@ -72,6 +72,7 @@ const RightMenu = () => {
         >
           <Link
             as={BrowserLink}
+            to="/"
             fontSize="18px"
             borderBottom="2px solid black"
             _hover={{
@@ -84,6 +85,7 @@ const RightMenu = () => {
           </Link>
           <Link
             as={BrowserLink}
+            to="/main"
             fontSize="18px"
             borderBottom="2px solid black"
             _hover={{
@@ -108,6 +110,7 @@ const RightMenu = () => {
           </Link>
           <Link
             as={BrowserLink}
+            to="/faq"
             fontSize="18px"
             borderBottom="2px solid black"
             _hover={{
@@ -119,6 +122,8 @@ const RightMenu = () => {
             FAQ
           </Link>
           <CustomButton
+            as={BrowserLink}
+            to="/"
             fontSize="18px"
             bgColor="transparent"
             justifyContent="flex-end"
