@@ -61,8 +61,8 @@ const BoardPage = () => {
         >
           <SwiperSlide>
             <Stack bgColor="blue.200" maxW="350px" h="100%" padding="18px 20px" borderRadius="25px">
-              <Box borderBottom="1px solid #142F32" mb="20px">
-                <Text color="grey.900" textAlign="center">
+              <Box borderBottom="2px solid #142F32" mb="20px">
+                <Text color="grey.900" fontWeight="600" textAlign="center">
                   To Do
                 </Text>
               </Box>
@@ -117,8 +117,8 @@ const BoardPage = () => {
           </SwiperSlide>
           <SwiperSlide>
             <Stack bgColor="blue.200" maxW="350px" h="100%" padding="18px 20px" borderRadius="25px">
-              <Box borderBottom="1px solid #142F32" mb="20px">
-                <Text color="grey.900" textAlign="center">
+              <Box borderBottom="2px solid #142F32" mb="20px">
+                <Text color="grey.900" fontWeight="600" textAlign="center">
                   Ready for check
                 </Text>
               </Box>
@@ -137,8 +137,8 @@ const BoardPage = () => {
           </SwiperSlide>
           <SwiperSlide>
             <Stack bgColor="blue.200" maxW="350px" h="100%" padding="18px 20px" borderRadius="25px">
-              <Box borderBottom="1px solid #142F32" mb="20px">
-                <Text color="grey.900" textAlign="center">
+              <Box borderBottom="2px solid #142F32" mb="20px">
+                <Text color="grey.900" fontWeight="600" textAlign="center">
                   Done
                 </Text>
               </Box>
