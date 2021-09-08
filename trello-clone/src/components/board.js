@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Stack, Text } from "@chakra-ui/react";
+import { Box, Stack, Text, Button } from "@chakra-ui/react";
 import { Link as BrowserLink } from "react-router-dom";
 
 const Board = () => {
@@ -19,8 +19,25 @@ const Board = () => {
         bgColor: "#6E919A",
       }}
     >
-      <Text w="100%" fontWeight="700" mb="10px" borderBottom="2px solid #142F32">
-        Board title
+      <Text
+        w="100%"
+        fontWeight="700"
+        mb="10px"
+        borderBottom="2px solid #142F32"
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        Board title{" "}
+        <Button
+          mb="10px"
+          bgColor="#ADC9C4"
+          _focus={{
+            boxShadow: "none",
+          }}
+        >
+          Edit
+        </Button>
       </Text>
       <Stack spacing="6px">
         <Text>Current: N</Text>
