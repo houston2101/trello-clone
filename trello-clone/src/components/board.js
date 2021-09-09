@@ -2,14 +2,14 @@ import * as React from "react";
 import { Box, Stack, Text } from "@chakra-ui/react";
 import { Link as BrowserLink } from "react-router-dom";
 
-const Board = () => {
+const Board = ({ board }) => {
   return (
     <Box
       bgColor="blue.300"
       w={{ base: "100%", md: "40%" }}
       minH="130px"
       as={BrowserLink}
-      to="/boards/some-board"
+      to={`/boards/${board._id}`}
       borderRadius="25px"
       padding="19px 15px"
       mb="20px"
@@ -20,12 +20,12 @@ const Board = () => {
       }}
     >
       <Text w="100%" fontWeight="700" mb="10px" borderBottom="2px solid #142F32">
-        Board title
+        {board.title}
       </Text>
       <Stack spacing="6px">
-        <Text>Current: N</Text>
-        <Text>Check: N</Text>
-        <Text>Done: N</Text>
+        <Text>Current: {board.columns[0].cards.length}</Text>
+        <Text>Check: {board.columns[1].cards.length}</Text>
+        <Text>Done: {board.columns[2].cards.length}</Text>
       </Stack>
     </Box>
   );

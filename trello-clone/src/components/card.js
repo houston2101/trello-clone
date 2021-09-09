@@ -1,9 +1,15 @@
 import * as React from "react";
 import { Box, Text, Flex } from "@chakra-ui/react";
+import styled from "@emotion/styled";
 
 import CardOpenModal from "./sections/cardOpenModal";
 
-const Card = () => {
+const CustomText = styled(Text)`
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+`;
+
+const Card = ({ update, el }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const setIsOpenHandler = () => {
     setIsOpen(!isOpen);
@@ -17,7 +23,15 @@ const Card = () => {
       onClick={setIsOpenHandler}
     >
       <Flex justifyContent="space-between" borderBottom="2px solid #142F32" mb="10px">
-        <Text fontWeight="600">Card title</Text>
+        <Text
+          fontWeight="600"
+          w="50%"
+          overflow="hidden"
+          textOverflow="ellipsis"
+          whiteSpace="nowrap"
+        >
+          {el.title}
+        </Text>
         <Flex alignItems="center">
           <Box
             w="30px"
@@ -48,8 +62,10 @@ const Card = () => {
           />
         </Flex>
       </Flex>
-      <Text>Card description and task description</Text>
-      <CardOpenModal isOpen={isOpen} onClose={setIsOpenHandler} />
+      <CustomText display="-webkit-box;" overflow="hidden">
+        {el.description}
+      </CustomText>
+      <CardOpenModal update={update} el={el} isOpen={isOpen} onClose={setIsOpenHandler} />
     </Box>
   );
 };

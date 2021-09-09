@@ -2,9 +2,31 @@ import { Heading, Button, Flex, Input, Image } from "@chakra-ui/react";
 import * as React from "react";
 import { Link as BrowserLink } from "react-router-dom";
 
+import { useHttp } from "../hooks/http.hook";
+import { AuthContext } from "../context/AuthContext";
 import LayoutNoHeader from "../components/layout/no-header";
 
 const AuthPage = () => {
+  const auth = React.useContext(AuthContext);
+  const { request } = useHttp();
+  const [form, setForm] = React.useState({
+    email: "",
+    password: "",
+  });
+  const changeHandler = (event) => {
+    setForm({ ...form, [event.target.name]: event.target.value });
+  };
+
+  const loginHandler = async () => {
+    try {
+      const data = await request("/api/auth/login", "POST", { ...form });
+      console.log(data);
+      auth.login(data.userId, data.email, data.nickname);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <LayoutNoHeader>
       <Heading mb={{ base: "16px", md: "18px" }} fontSize={["l", "l", "l", "3xl"]}>
@@ -35,7 +57,11 @@ const AuthPage = () => {
             _focus={{
               boxShadow: "none",
             }}
-          ></Input>
+            id="email"
+            type="email"
+            name="email"
+            onChange={changeHandler}
+          />
           <Input
             fontSize={["xs", "xs", "xs", "s"]}
             borderRadius="15px"
@@ -46,7 +72,11 @@ const AuthPage = () => {
             _focus={{
               boxShadow: "none",
             }}
-          ></Input>
+            id="password"
+            type="password"
+            name="password"
+            onChange={changeHandler}
+          />
         </Flex>
 
         <Flex justifyContent="space-between" width="100%">
@@ -68,7 +98,6 @@ const AuthPage = () => {
             Sing up
           </Button>
           <Button
-            as={BrowserLink}
             fontSize={["xs", "xs", "xs", "s"]}
             bgColor="blue.300"
             borderRadius="15px"
@@ -80,7 +109,7 @@ const AuthPage = () => {
             _focus={{
               boxShadow: "none",
             }}
-            to="/main"
+            onClick={loginHandler}
           >
             Log in
           </Button>

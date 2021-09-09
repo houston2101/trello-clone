@@ -12,7 +12,27 @@ import {
   Input,
 } from "@chakra-ui/react";
 
-const CardModal = ({ isOpen, onClose }) => {
+import { useHttp } from "../hooks/http.hook";
+
+const CardModal = ({ boardId, isOpen, onClose, update }) => {
+  const { request } = useHttp();
+  const [card, setCard] = React.useState({
+    title: "",
+    description: "",
+  });
+
+  const changeHandler = (event) => {
+    setCard({ ...card, [event.target.name]: event.target.value });
+  };
+
+  const addCardHandler = async () => {
+    try {
+      const data = await request("/api/card/add", "POST", { id: boardId, cardInfo: card });
+      update(true);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -37,13 +57,23 @@ const CardModal = ({ isOpen, onClose }) => {
             _focus={{
               boxShadow: "none",
             }}
+            name="title"
+            onChange={changeHandler}
           ></Input>
-          <Textarea placeholder="Card description"></Textarea>
+          <Textarea
+            placeholder="Card description"
+            name="description"
+            onChange={changeHandler}
+          ></Textarea>
         </ModalBody>
         <ModalFooter>
           <Button
             _focus={{
               boxShadow: "none",
+            }}
+            onClick={() => {
+              addCardHandler();
+              onClose();
             }}
           >
             Create card

@@ -2,9 +2,34 @@ import * as React from "react";
 import { Heading, Button, Flex, Input, Image } from "@chakra-ui/react";
 import { Link as BrowserLink } from "react-router-dom";
 
+import { useHttp } from "../hooks/http.hook";
 import LayoutNoHeader from "../components/layout/no-header";
 
 const RegPage = () => {
+  const { request } = useHttp();
+  const [form, setForm] = React.useState({
+    nickname: "",
+    email: "",
+    password: "",
+    repeatedPassword: "",
+  });
+  const changeHandler = (event) => {
+    setForm({ ...form, [event.target.name]: event.target.value });
+  };
+  const registerHandler = async () => {
+    if (form.password.length < 6) {
+    } else if (form.repeatedPassword === form.password) {
+      try {
+        const data = await request("api/auth/register", "POST", { ...form });
+        console.log("data: ", data);
+      } catch (e) {
+        console.log("err", e);
+      }
+    } else {
+      console.log("err");
+    }
+  };
+
   return (
     <LayoutNoHeader>
       <Heading mb={{ base: "16px", md: "18px" }} fontSize={["l", "l", "l", "3xl"]}>
@@ -36,6 +61,10 @@ const RegPage = () => {
             _focus={{
               boxShadow: "none",
             }}
+            type="nickname"
+            name="nickname"
+            id="nickname"
+            onChange={changeHandler}
           ></Input>
           <Input
             fontSize={["xs", "xs", "xs", "s"]}
@@ -48,6 +77,10 @@ const RegPage = () => {
             _focus={{
               boxShadow: "none",
             }}
+            type="email"
+            name="email"
+            id="email"
+            onChange={changeHandler}
           ></Input>
           <Input
             fontSize={["xs", "xs", "xs", "s"]}
@@ -60,6 +93,10 @@ const RegPage = () => {
             _focus={{
               boxShadow: "none",
             }}
+            type="password"
+            name="password"
+            id="password"
+            onChange={changeHandler}
           ></Input>
           <Input
             fontSize={["sm", "sm", "sm", "s"]}
@@ -71,6 +108,10 @@ const RegPage = () => {
             _focus={{
               boxShadow: "none",
             }}
+            type="password"
+            name="repeatedPassword"
+            id="repeatedPassword"
+            onChange={changeHandler}
           ></Input>
         </Flex>
 
@@ -93,7 +134,6 @@ const RegPage = () => {
             Back to Login
           </Button>
           <Button
-            as={BrowserLink}
             fontSize={["2xs", "2xs", "2xs", "xs"]}
             bgColor="blue.300"
             borderRadius="15px"
@@ -105,7 +145,7 @@ const RegPage = () => {
             _focus={{
               boxShadow: "none",
             }}
-            to="/account"
+            onClick={registerHandler}
           >
             Register
           </Button>

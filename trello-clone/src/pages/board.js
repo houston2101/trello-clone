@@ -1,12 +1,16 @@
 import * as React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Stack, Box, Circle, Flex, Text, Button, useMediaQuery } from "@chakra-ui/react";
-import Card from "../components/card";
+import { Flex, useMediaQuery } from "@chakra-ui/react";
 import Layout from "../components/layout/layout";
 import styled from "@emotion/styled";
 import CardModal from "../components/cardModal";
+import { useParams } from "react-router-dom";
+
+import { useHttp } from "../hooks/http.hook";
 
 import "swiper/swiper-bundle.min.css";
+import Spinner from "../components/spinner";
+import BoardColumn from "../components/boardColumn";
 
 const BoardSwiper = styled(Swiper)`
   @media (min-width: 1540px) {
@@ -22,14 +26,47 @@ const BoardSwiper = styled(Swiper)`
 `;
 
 const BoardPage = () => {
+  const { id } = useParams();
+  const { request } = useHttp();
+
+  const [update, setUpdate] = React.useState(true);
+  const [loading, setLoading] = React.useState(true);
+  const [board, setBoard] = React.useState({});
   const [isOpen, setIsOpen] = React.useState(false);
   const [isLargerThen900, isLargerThen1100] = useMediaQuery([
     "(min-width: 900px)",
     "(min-width: 1100px)",
   ]);
+
+  React.useEffect(async () => {
+    if (update) {
+      try {
+        const data = await request("/api/board/get-by-id", "POST", { id: id });
+        setBoard(data.boards);
+        setLoading(false);
+        setUpdate(false);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }, [id, update]);
+
+  React.useEffect(() => {
+    document.title = `Trello-Clone - ${board.title}`;
+    console.log(board);
+  }, [board]);
+
   const setIsOpenHandler = () => {
     setIsOpen(!isOpen);
   };
+
+  if (loading) {
+    return (
+      <Layout>
+        <Spinner />
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -37,6 +74,7 @@ const BoardPage = () => {
         <BoardSwiper
           className={isLargerThen1100 ? "swiper-no-swiping" : "swiper"}
           resizeObserver
+          observeSlideChildren
           observer
           centeredSlides={isLargerThen900 ? false : true}
           slidesPerView={1}
@@ -59,101 +97,20 @@ const BoardPage = () => {
             },
           }}
         >
-          <SwiperSlide>
-            <Stack bgColor="blue.200" maxW="350px" h="100%" padding="18px 20px" borderRadius="25px">
-              <Box borderBottom="2px solid #142F32" mb="20px">
-                <Text color="grey.900" fontWeight="600" textAlign="center">
-                  To Do
-                </Text>
-              </Box>
-              <Stack overflow="auto" h="100%">
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-              </Stack>
-              <Button
-                w="100%"
-                h="80px"
-                left="0"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                bottom="0"
-                bgColor="blue.300"
-                borderRadius="15px"
-                _focus={{
-                  boxShadow: "none",
-                }}
-                onClick={setIsOpenHandler}
-              >
-                <Flex alignItems="center">
-                  Add card
-                  <Circle
-                    pos="relative"
-                    size="15px"
-                    ml="7px"
-                    _before={{
-                      content: '""',
-                      w: "15px",
-                      h: "3px",
-                      pos: "absolute",
-                      bgColor: "grey.900",
-                    }}
-                    _after={{
-                      content: '""',
-                      w: "15px",
-                      h: "3px",
-                      pos: "absolute",
-                      bgColor: "grey.900",
-                      transform: "rotate(90deg)",
-                    }}
-                  />
-                </Flex>
-              </Button>
-            </Stack>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Stack bgColor="blue.200" maxW="350px" h="100%" padding="18px 20px" borderRadius="25px">
-              <Box borderBottom="2px solid #142F32" mb="20px">
-                <Text color="grey.900" fontWeight="600" textAlign="center">
-                  Ready for check
-                </Text>
-              </Box>
-              <Stack overflow="auto" h="100%">
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-              </Stack>
-            </Stack>
-          </SwiperSlide>
-          <SwiperSlide>
-            <Stack bgColor="blue.200" maxW="350px" h="100%" padding="18px 20px" borderRadius="25px">
-              <Box borderBottom="2px solid #142F32" mb="20px">
-                <Text color="grey.900" fontWeight="600" textAlign="center">
-                  Done
-                </Text>
-              </Box>
-              <Stack overflow="auto" h="100%">
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-              </Stack>
-            </Stack>
-          </SwiperSlide>
+          {board.columns.map((column) => {
+            return (
+              <SwiperSlide key={column.id}>
+                <BoardColumn
+                  update={setUpdate}
+                  column={column}
+                  setIsOpenHandler={setIsOpenHandler}
+                />
+              </SwiperSlide>
+            );
+          })}
         </BoardSwiper>
       </Flex>
-      <CardModal isOpen={isOpen} onClose={setIsOpenHandler} />
+      <CardModal boardId={id} update={setUpdate} isOpen={isOpen} onClose={setIsOpenHandler} />
     </Layout>
   );
 };

@@ -23,7 +23,7 @@ router.post(
       });
     } else {
       try {
-        const { nickname, email, password } = req.baseUrl;
+        const { nickname, email, password } = req.body;
         const candidate = await User.findOne({ email });
         if (candidate) {
           res.status(400).json({
@@ -31,10 +31,8 @@ router.post(
           });
         } else {
           const hashedPassword = await bcrypt.hash(password, 12);
-
-          await accessKeys.updateOne({ accessKey }, { active: false });
-
-          const user = new User({
+          console.log(hashedPassword);
+          const user = await new User({
             nickname,
             email,
             password: hashedPassword,
@@ -82,7 +80,6 @@ router.post(
         });
       }
       res.json({
-        token,
         userId: user.id,
         nickname: user.nickname,
         email: user.email,

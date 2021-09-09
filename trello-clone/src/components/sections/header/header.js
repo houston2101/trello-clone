@@ -3,8 +3,10 @@ import { Flex, Center, Circle, Image, Button } from "@chakra-ui/react";
 
 import Logo from "./logo";
 import RightMenu from "./rightmenu";
+import { AuthContext } from "../../../context/AuthContext";
 
 const Header = () => {
+  const auth = React.useContext(AuthContext);
   return (
     <Flex
       flexDir="row"
@@ -20,8 +22,8 @@ const Header = () => {
         justifyContent={{ base: "space-between", md: "space-evenly" }}
         w={{ base: "150px", md: "200px" }}
       >
-        <RightMenu />
-        <Image src="./logout.png" w={{ base: "25px", md: "30px" }} />
+        <RightMenu logout={auth.logout} />
+        <Image src="./logout.png" w={{ base: "25px", md: "30px" }} onClick={auth.logout} />
       </Flex>
     </Flex>
   );

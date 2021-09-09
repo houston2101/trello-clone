@@ -1,43 +1,24 @@
 import * as React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
-
-import AuthPage from "./pages/login";
-import RegPage from "./pages/signup";
+import { AuthContext } from "./context/AuthContext";
+import { useAuth } from "./hooks/auth.hook";
+import useRoutes from "./routes";
 import Fonts from "./theme/fonts";
 import { customTheme } from "./theme";
-import Account from "./pages/account";
-import MainPage from "./pages/main";
-import BoardPage from "./pages/board";
-import Faq from "./pages/faq";
 
 function App() {
+  const { login, logout, userId } = useAuth();
+  const isAuthenticated = userId;
+  const routes = useRoutes(isAuthenticated);
+
   return (
-    <ChakraProvider theme={customTheme}>
-      <Fonts />
-      <Router>
-        <Switch>
-          <Route path="/" exact>
-            <AuthPage />
-          </Route>
-          <Route path="/register">
-            <RegPage />
-          </Route>
-          <Route path="/account">
-            <Account />
-          </Route>
-          <Route path="/main">
-            <MainPage />
-          </Route>
-          <Route path="/boards/:id">
-            <BoardPage />
-          </Route>
-          <Route path="/faq">
-            <Faq />
-          </Route>
-        </Switch>
-      </Router>
-    </ChakraProvider>
+    <AuthContext.Provider value={{ login, logout, userId, isAuthenticated }}>
+      <ChakraProvider theme={customTheme}>
+        <Fonts />
+        <Router>{routes}</Router>
+      </ChakraProvider>
+    </AuthContext.Provider>
   );
 }
 

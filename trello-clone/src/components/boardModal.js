@@ -10,8 +10,27 @@ import {
   Input,
   ModalHeader,
 } from "@chakra-ui/react";
+import { AuthContext } from "../context/AuthContext";
+import { useHttp } from "../hooks/http.hook";
 
-const BoardModal = ({ isOpen, onClose }) => {
+const BoardModal = ({ isOpen, onClose, reload }) => {
+  const [form, setForm] = React.useState({ title: "" });
+  const { request } = useHttp();
+  const auth = React.useContext(AuthContext);
+
+  const createBoardHandler = async () => {
+    try {
+      const res = await request("api/board/add", "POST", { ...form, userId: auth.userId });
+      console.log(res);
+      reload(true);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const changeHandler = (event) => {
+    setForm({ ...form, [event.target.name]: event.target.value });
+  };
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -35,12 +54,19 @@ const BoardModal = ({ isOpen, onClose }) => {
             _focus={{
               boxShadow: "none",
             }}
+            name="title"
+            id="title"
+            onChange={changeHandler}
           ></Input>
         </ModalBody>
         <ModalFooter>
           <Button
             _focus={{
               boxShadow: "none",
+            }}
+            onClick={() => {
+              createBoardHandler();
+              onClose();
             }}
           >
             Create board

@@ -11,13 +11,28 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-const CardOpenModal = ({ isOpen, onClose }) => {
+import { useParams } from "react-router-dom";
+import { useHttp } from "../../hooks/http.hook";
+
+const CardOpenModal = ({ update, el, isOpen, onClose }) => {
+  const { id } = useParams();
+  const { request } = useHttp();
+
+  const deleteCardHandler = async () => {
+    try {
+      await request("/api/card/delete", "POST", { boardId: id, cardId: el.id, column: el.column });
+      update(true);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent flexDir="column">
         <ModalHeader>
-          Card title
+          {el.title}
           <ModalCloseButton
             _focus={{
               boxShadow: "none",
@@ -25,10 +40,7 @@ const CardOpenModal = ({ isOpen, onClose }) => {
           />
         </ModalHeader>
 
-        <ModalBody>
-          Description of your card Description of your card Description of your card Description of
-          your card Description of your card Description of your card Description of your card
-        </ModalBody>
+        <ModalBody>{el.description}</ModalBody>
         <ModalFooter>
           <Button
             fontSize={["xs", "xs", "xs", "s"]}
@@ -42,6 +54,7 @@ const CardOpenModal = ({ isOpen, onClose }) => {
             _focus={{
               boxShadow: "none",
             }}
+            onClick={deleteCardHandler}
           >
             Delete card
           </Button>

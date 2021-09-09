@@ -15,12 +15,17 @@ const boardSchema = new Schema(
       type: Array,
       required: true,
       unique: false,
-      default: [[], [], []],
+      default: [
+        { id: "to-do", cards: [], title: "To Do" },
+        { id: "ready-to-check", cards: [], title: "Ready to check" },
+        { id: "done", cards: [], title: "Done" },
+      ],
     },
     type: {
       type: String,
       required: true,
       unique: false,
+      default: "existed",
     },
   },
   { versionKey: false },

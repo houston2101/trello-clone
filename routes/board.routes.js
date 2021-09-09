@@ -18,7 +18,7 @@ router.post("/add", async (req, res) => {
 router.post("/remove", async (req, res) => {
   try {
     const data = req.body;
-    Board.findByIdAndDelete(data.id);
+    await Board.findByIdAndDelete(data.id);
     return res.json({ message: "board removed" });
   } catch (e) {
     res.status(500).json({ message: e.message });
@@ -28,7 +28,18 @@ router.post("/remove", async (req, res) => {
 router.post("/get", async (req, res) => {
   try {
     const data = req.body;
-    const boards = Board.find({ userId: data.userId });
+    const boards = await Board.find({ userId: data.userId });
+    return res.json({ boards, message: "board got" });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+});
+
+router.post("/get-by-id", async (req, res) => {
+  try {
+    const data = req.body;
+    console.log(data);
+    const boards = await Board.findById(data.id);
     return res.json({ boards, message: "board got" });
   } catch (e) {
     res.status(500).json({ message: e.message });
@@ -38,7 +49,7 @@ router.post("/get", async (req, res) => {
 router.post("/change", async (req, res) => {
   try {
     const data = req.body;
-    Board.findByIdAndUpdate(data.id, data);
+    await Board.findByIdAndUpdate(data.id, data);
     return res.json({ message: "board changed" });
   } catch (e) {
     res.status(500).json({ message: e.message });

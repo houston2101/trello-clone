@@ -15,7 +15,7 @@ const CustomButton = styled(Button)`
   }
 `;
 
-const RightMenu = () => {
+const RightMenu = ({ logout }) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const [isLargerThen768] = useMediaQuery("(min-width: 768px)");
@@ -98,6 +98,7 @@ const RightMenu = () => {
           </Link>
           <Link
             as={BrowserLink}
+            to="/account"
             fontSize="18px"
             borderBottom="2px solid black"
             _hover={{
@@ -122,8 +123,7 @@ const RightMenu = () => {
             FAQ
           </Link>
           <CustomButton
-            as={BrowserLink}
-            to="/"
+            onClick={logout}
             fontSize="18px"
             bgColor="transparent"
             justifyContent="flex-end"
